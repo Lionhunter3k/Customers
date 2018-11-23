@@ -34,6 +34,8 @@ namespace Customers.Queries.Handler
                 query = query.Where(q => q.Name.StartsWith(message.Request.Name));
             if (!string.IsNullOrEmpty(message.Request.PhoneNumber))
                 query = query.Where(q => q.PhoneNumber.StartsWith(message.Request.PhoneNumber));
+            if (!string.IsNullOrEmpty(message.Request.Email))
+                query = query.Where(q => q.Email.StartsWith(message.Request.Email));
             //we should be careful when ordering by dates
             var results = await query.OrderByDescending(q => q.CreatedOnUtc).ThenBy(q => q.Name).Skip(message.Page * message.PageSize).Take(message.PageSize).ToListAsync();
             var count = await query.CountAsync();

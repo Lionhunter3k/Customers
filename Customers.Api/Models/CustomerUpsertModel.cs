@@ -10,6 +10,7 @@ namespace Customers.Api.Models
         public long Id { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Email is invalid")]
         [DataType(DataType.EmailAddress)]
         [StringLength(50, ErrorMessage = "Email can't exceed 50 characters")]
         public string Email { get; set; }
@@ -19,7 +20,7 @@ namespace Customers.Api.Models
         [StringLength(50, ErrorMessage = "Name can't exceed 50 characters")]
         public string Name { get; set; }
 
-        [RegularExpression(@"([0-9 \.\(\)/\\\-\+])+", ErrorMessageResourceName = "Letters are not allowed")]
+        [RegularExpression(@"([0-9 \.\(\)/\\\-\+])+", ErrorMessage = "Letters are not allowed")]
         [DataType(DataType.PhoneNumber)]
         [StringLength(20, ErrorMessage = "PhoneNumber can't exceed 20 characters")]
         public string PhoneNumber { get; set; }
