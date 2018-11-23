@@ -1,0 +1,10 @@
+{
+    "name": "dellcustomers",
+    "description": "Useful patterns for web API",
+    "repository": "https://github.com/Lionhunter3k/Customers",
+    "keywords": ["aspnet", "core"],
+    "stack": "heroku-16",
+    "buildpacks": [{
+        "url": "https://github.com/jincod/dotnetcore-buildpack"
+    }]
+  }

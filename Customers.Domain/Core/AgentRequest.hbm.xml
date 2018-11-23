@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="Customers.Domain.Core" assembly="Customers.Domain">
+  <class name="AgentRequest" dynamic-update="true">
+    <id name="Id" length="50">
+      <generator class="assigned">
+      </generator>
+    </id>
+    <property name="CreatedOnUtc"></property>
+    <property name="LastRequestOnUtc"></property>
+    <set name="UpdatedCustomers" table="Customers_UpdatedByAgents_Mapping" inverse="true" cascade="none" batch-size="20" access="field.camelcase-underscore">
+      <key column="AgentRequestId"/>
+      <many-to-many class="Customer" column="CustomerId"/>
+    </set>
+    <set name="CreatedCustomers" inverse="true" cascade="all-delete-orphan" batch-size="100" access="field.camelcase-underscore">
+      <key column="CreatedByAgentId" />
+      <one-to-many class="Customer"/>
+    </set>
+  </class>
+</hibernate-mapping>

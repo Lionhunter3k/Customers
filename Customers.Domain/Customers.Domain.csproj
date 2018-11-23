@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Core\Address.hbm.xml" />
+    <None Remove="Core\AgentRequest.hbm.xml" />
+    <None Remove="Core\Customer.hbm.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Core\Address.hbm.xml" />
+    <EmbeddedResource Include="Core\AgentRequest.hbm.xml" />
+    <EmbeddedResource Include="Core\Customer.hbm.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NHibernate" Version="5.1.3" />
+  </ItemGroup>
+
+</Project>

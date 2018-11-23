@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="Customers.Domain.Core" assembly="Customers.Domain">
+  <class name="Customer" dynamic-update="true">
+    <id name="Id">
+      <generator class="hilo">
+      </generator>
+    </id>
+    <property name="Email" not-null="true" length="50"></property>
+    <property name="Name" not-null="true" length="50"></property>
+    <property name="PhoneNumber" not-null="true" length="20"></property>
+    <property name="NumberOfIndividualRequests"></property>
+    <property name="DateOfBirth"></property>
+    <property name="CreatedOnUtc"></property>
+    <property name="UpdatedOnUtc"></property>
+    <many-to-one name="CreatedByAgent" class="AgentRequest" column="CreatedByAgentId" not-null="true"></many-to-one>
+    <set name="UpdatedByAgents" table="Customers_UpdatedByAgents_Mapping" cascade="none" batch-size="20" access="field.camelcase-underscore">
+      <key column="CustomerId"/>
+      <many-to-many class="AgentRequest" column="AgentRequestId"/>
+    </set>
+    <set name="Addresses" cascade="all-delete-orphan" batch-size="100" access="field.camelcase-underscore">
+      <key column="CustomerId" not-null="true" update="false"/>
+      <one-to-many class="Address"/>
+    </set>
+  </class>
+</hibernate-mapping>

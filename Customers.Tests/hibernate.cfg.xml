@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration
+xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    <property name="connection.driver_class">NHibernate.Driver.SQLite20Driver</property>
+    <property name="dialect">NHibernate.Dialect.SQLiteDialect</property>
+    <property name="connection.connection_string">data source=StressData.s3db; DateTimeFormatString=yyyy-MM-dd HH:mm:ss.FFFFFFF; Version=3;</property>
+    <property name="adonet.batch_size">100</property>
+    <mapping assembly="Customers.Domain" />
+  </session-factory>
+</hibernate-configuration>
