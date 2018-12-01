@@ -1,6 +1,6 @@
 ﻿using Customers.Domain.Core;
-using Customers.Infrastructure.Model;
-using Customers.Infrastructure.Queries;
+using Infrastructure.Model;
+using Infrastructure.Queries;
 using System;
 using System.Collections.Generic;
 using System.Text;

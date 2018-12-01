@@ -1,6 +1,6 @@
 ﻿using Customers.Api.Models;
 using Customers.Domain.Core;
-using Customers.Infrastructure.Mapper;
+using Infrastructure.AutoMapper.Mapper;
 using System;
 using System.Linq;
 

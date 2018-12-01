@@ -13,12 +13,12 @@ namespace Customers.Infrastructure.Mapper
 
             profile.ForAllPropertyMaps(map => map.DestinationPropertyType == typeof(DateTime) && map.SourceType == typeof(DateTime) && map.SourceMember.Name.ToLowerInvariant().EndsWith("utc") && !map.DestinationProperty.Name.ToLowerInvariant().EndsWith("utc"), (map, expression) =>
             {
-                expression.ResolveUsing<WorkContextDateTimeResolver, DateTime>(map.SourceMember.Name);
+                expression.ResolveUsing<TimezoneContextDateTimeResolver, DateTime>(map.SourceMember.Name);
             });
 
             profile.ForAllPropertyMaps(map => map.DestinationPropertyType == typeof(DateTime?) && map.SourceType == typeof(DateTime?) && map.SourceMember.Name.ToLowerInvariant().EndsWith("utc") && !map.DestinationProperty.Name.ToLowerInvariant().EndsWith("utc"), (map, expression) =>
             {
-                expression.ResolveUsing<WorkContextDateTimeResolver, DateTime?>(map.SourceMember.Name);
+                expression.ResolveUsing<TimezoneContextDateTimeResolver, DateTime?>(map.SourceMember.Name);
             });
         }
     }

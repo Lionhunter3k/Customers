@@ -1,4 +1,4 @@
-﻿using Customers.Infrastructure.Queries;
+﻿using Infrastructure.Queries;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,7 +14,7 @@ namespace Customers.Queries.Model
         [StringLength(50, ErrorMessage = "Name can't exceed 50 characters")]
         public string Name { get; set; }
 
-        [RegularExpression(@"([0-9 \.\(\)/\\\-\+])+", ErrorMessageResourceName = "Letters are not allowed")]
+        [RegularExpression(@"([0-9 \.\(\)/\\\-\+])+", ErrorMessage = "Letters are not allowed")]
         [DataType(DataType.PhoneNumber)]
         [StringLength(50, ErrorMessage = "PhoneNumber can't exceed 50 characters")]
         public string PhoneNumber { get; set; }

@@ -19,9 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Api.NH\Api.NH.csproj" />
+    <ProjectReference Include="..\Api\Api.csproj" />
     <ProjectReference Include="..\Customers.Domain\Customers.Domain.csproj" />
-    <ProjectReference Include="..\Customers.Infrastructure\Customers.Infrastructure.csproj" />
     <ProjectReference Include="..\Customers.Queries\Customers.Queries.csproj" />
+    <ProjectReference Include="..\Infrastructure.AutoMapper\Infrastructure.AutoMapper.csproj" />
+    <ProjectReference Include="..\Infrastructure.NH\Infrastructure.NH.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

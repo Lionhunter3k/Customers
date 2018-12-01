@@ -1,4 +1,5 @@
 ﻿using Customers.Domain.Services;
+using Domain.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;

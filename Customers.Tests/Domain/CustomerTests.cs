@@ -11,7 +11,7 @@ using System.Linq;
 namespace Customers.Tests.Domain
 {
     [TestFixture]
-    public class CustomerTests : BaseFixture
+    public class CustomerTests
     {
         private Mock<ICustomerService> customerServiceMock;
         private ICollection<Customer> customers;
@@ -20,7 +20,8 @@ namespace Customers.Tests.Domain
         private string phoneNumber;
         private DateTime dob;
 
-        protected override void OnSetup()
+        [SetUp]
+        public void Setup()
         {
             this.customerServiceMock = new Mock<ICustomerService>();
             this.customers = new HashSet<Customer>();
