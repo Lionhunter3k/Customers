@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Customers.Domain.Core;
-using Customers.Infrastructure.Queries;
 using Customers.Queries.Model;
+using Infrastructure.Queries;
+using Infrastructure.Services;
 using NHibernate;
 using NHibernate.Linq;
 using System;
@@ -16,11 +17,13 @@ namespace Customers.Queries.Handler
     {
         private readonly ISession _session;
         private readonly IMapper _mapper;
+        private readonly IDateTimeZoneContext _dateTimeZoneContext;
 
-        public CustomerListHandler(ISession session, IMapper mapper)
+        public CustomerListHandler(ISession session, IMapper mapper, IDateTimeZoneContext dateTimeZoneContext)
         {
             this._session = session;
             this._mapper = mapper;
+            this._dateTimeZoneContext = dateTimeZoneContext;
         }
 
         public async Task<PagedList<CustomerListModel>> HandleAsync(PagedRequest<CustomerListRequestModel, CustomerListModel> message)
@@ -39,7 +42,8 @@ namespace Customers.Queries.Handler
             //we should be careful when ordering by dates
             var results = await query.OrderByDescending(q => q.CreatedOnUtc).ThenBy(q => q.Name).Skip(message.Page * message.PageSize).Take(message.PageSize).ToListAsync();
             var count = await query.CountAsync();
-            return new PagedList<CustomerListModel>(_mapper.Map<List<CustomerListModel>>(results), message.Page, message.PageSize, count);
+            var timeZone = await _dateTimeZoneContext.GetTimeZoneAsync();
+            return new PagedList<CustomerListModel>(_mapper.Map<List<CustomerListModel>>(results, opt => opt.Items["currentUserTimeZoneInfo"] = timeZone), message.Page, message.PageSize, count);
         }
     }
 }

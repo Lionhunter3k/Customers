@@ -1,5 +1,5 @@
 ﻿using Customers.Domain.Core;
-using Customers.Infrastructure.Model;
+using Infrastructure.Model;
 using System;
 using System.ComponentModel.DataAnnotations;
 

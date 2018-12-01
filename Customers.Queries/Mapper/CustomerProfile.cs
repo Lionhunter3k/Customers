@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Customers.Domain.Core;
-using Customers.Infrastructure.Mapper;
 using Customers.Queries.Model;
+using Infrastructure.AutoMapper.Mapper;
 using System;
 using System.Linq;
 

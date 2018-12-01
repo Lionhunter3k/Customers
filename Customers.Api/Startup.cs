@@ -1,14 +1,15 @@
 ﻿using Autofac;
-using Customers.Api.Infrastructure.Container;
 using Customers.Domain.Core;
-using Customers.Infrastructure.Container;
-using Customers.Infrastructure.Services;
 using Customers.Queries.Model;
+using Infrastructure.AutoMapper.Container;
+using Infrastructure.Container;
+using Infrastructure.NH.Container;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using NHibernate.Tool.hbm2ddl;
+using Api.Infrastructure.Container;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 
@@ -28,10 +29,9 @@ namespace Customers.Api
             return services.AddAutofacProvider(builder =>
             {
                 var assemblies = new AssemblyRegistry()
-                .AddAssemblyFor<Startup>()
-                .AddAssemblyFor<IWorkContext>()
                 .AddAssemblyFor<Customer>()
-                .AddAssemblyFor<CustomerListModel>();
+                .AddAssemblyFor<CustomerListModel>()
+                .GetRegisteredAssemblies(Environment.ContentRootPath);
 
                 //nhibernate
                 var nhibernateModule = new XmlNhibernateModule()

@@ -1,11 +1,12 @@
-﻿using AutoMapper;
-using Customers.Api.Infrastructure.Filters;
+﻿using Api.Filters;
+using Api.NH.Filters;
+using AutoMapper;
 using Customers.Api.Models;
 using Customers.Domain.Core;
 using Customers.Domain.Services;
-using Customers.Infrastructure.Persistence;
-using Customers.Infrastructure.Queries;
 using Customers.Queries.Model;
+using Infrastructure.NH.Persistence;
+using Infrastructure.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
