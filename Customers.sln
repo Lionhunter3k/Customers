@@ -37,9 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Domain", "Movies.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Tests", "Movies.Tests\Movies.Tests.csproj", "{F14B115A-F025-4A2F-92F5-A413771C88D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.ElasticSearch", "Tests.ElasticSearch\Tests.ElasticSearch.csproj", "{C77DC73B-8E37-41FF-891C-015450BA212F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.ElasticSearch", "Tests.ElasticSearch\Tests.ElasticSearch.csproj", "{C77DC73B-8E37-41FF-891C-015450BA212F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Queries", "Movies.Queries\Movies.Queries.csproj", "{2E6B9A47-E8A6-44B7-9FC3-39FF360BEFF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Queries", "Movies.Queries\Movies.Queries.csproj", "{2E6B9A47-E8A6-44B7-9FC3-39FF360BEFF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Api", "Movies.Api\Movies.Api.csproj", "{5F5F0876-0F4C-4E84-8063-F9C4C9130D30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{2E6B9A47-E8A6-44B7-9FC3-39FF360BEFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E6B9A47-E8A6-44B7-9FC3-39FF360BEFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E6B9A47-E8A6-44B7-9FC3-39FF360BEFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F5F0876-0F4C-4E84-8063-F9C4C9130D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F5F0876-0F4C-4E84-8063-F9C4C9130D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F5F0876-0F4C-4E84-8063-F9C4C9130D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F5F0876-0F4C-4E84-8063-F9C4C9130D30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
