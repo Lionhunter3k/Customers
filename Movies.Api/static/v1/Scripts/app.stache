@@ -1,0 +1,34 @@
+﻿<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Movies</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false">
+            <ul class="nav navbar-nav">
+                <li class="{{#eq location.page 'movielist'}}active{{/eq}}"><a  href="{{routeUrl page='movielist'}}">All movies</a></li>
+                <li class="{{#eq location.page 'insertmovies'}}active{{/eq}}"><a  href="{{routeUrl page='insertmovies'}}">Insert movies</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="container">
+    <div class="page">
+        <h1>{{title}} ({{location.page}})</h1>
+        {{#switch location.page}}
+            {{#case "insertmovies"}}
+            <can-import from="pages/insertmovies" />
+            <insertmovies {location}="location" {^title}="title"></insertmovies>
+            {{/case}}
+            {{#default}}
+            <can-import from="pages/movielist" />
+            <movielist  {location}="location" {^title}="title"></movielist>
+            {{/default}}
+        {{/switch}}
+    </div>
+</div>
