@@ -14,12 +14,10 @@ namespace Movies.Queries.Handler
     public class MovieListHandler : IRequestHandler<PagedRequest<MovieListRequestModel, MovieListModel>, PagedList<MovieListModel>>
     {
         private readonly ElasticClient _elasticClient;
-        private readonly ElasticSearchConfiguration _elasticSearchConfiguration;
 
-        public MovieListHandler(ElasticSearchConfiguration elasticSearchConfiguration)
+        public MovieListHandler(ElasticClient elasticClient)
         {
-            this._elasticClient = elasticSearchConfiguration.GetClient();
-            this._elasticSearchConfiguration = elasticSearchConfiguration;
+            this._elasticClient = elasticClient;
         }
 
         public async Task<PagedList<MovieListModel>> HandleAsync(PagedRequest<MovieListRequestModel, MovieListModel> message)
@@ -114,7 +112,7 @@ namespace Movies.Queries.Handler
                                   .Query(nq => nq
                                       .Terms(t => t
                                       .Field(f => f.Cast.First().Name)
-                                      .Terms(splittedKeywords)))) 
+                                      .Terms(splittedKeywords))))
                                       || q.Nested(nf => nf
                                             .Path(p => p.Directors)
                                             .Query(nq => nq

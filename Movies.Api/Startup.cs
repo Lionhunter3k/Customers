@@ -54,6 +54,7 @@ namespace Movies.Api
                         return connectionSettings;
                     }
                 };
+                builder.RegisterModule(elasticModule);
             });
         }
 
