@@ -1,7 +1,7 @@
 ﻿if (!window._proxy) {
     window._proxy = {
         getInterceptor: function (object, propertyName) {
-            if (object.attr && object._data && object._data[propertyName]) {
+            if (object.attr && ((object._data && object._data[propertyName]) || (object._computedAttrs && object._computedAttrs[propertyName] && object._computedAttrs[propertyName].compute))) {
                 return object.attr(propertyName);
             }
             return object[propertyName];
@@ -15,8 +15,8 @@
             }
         },
         updatePostfixAddInterceptor: function (object, propertyName) {
-            var original = this.getInterceptor(object, propertyName)
-            this.setInterceptor(object, propertyName, original + 1)
+            var original = this.getInterceptor(object, propertyName);
+            this.setInterceptor(object, propertyName, original + 1);
             return original;
         },
         updatePostfixSubtractInterceptor: function (object, propertyName, value) {

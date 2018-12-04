@@ -8,8 +8,12 @@ export default can.Component.extend({
     viewModel: can.Map.extend({
         define: {
             title: {
-                type: 'string',
-                value: 'View movies'
+                get: function () {
+                    return "View movies";
+                }
+            },
+            location: {
+                Value: can.Map
             }
         }
     })
