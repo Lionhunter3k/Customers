@@ -21,26 +21,41 @@
     <div class="col-md-9">
         <div class="row">
             <ajax-pager read="/api/movies" {additional-data}="location" read-type="get" current-page-name="page" limit-name="pageSize" limit="10" *pager />
-            {{#if *pager.Loading}}
-                <loading></loading>
+            {{#if *pager.loading}}
+            <loading></loading>
             {{else}}
-                {{#each *pager.PaginatedItems}}
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <img alt="100%x200" data-src="holder.js/100%x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTY3NzgwNTQ1ZGQgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNjc3ODA1NDVkZCI+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI4OS44MDQ2ODc1IiB5PSIxMDUuMSI+MjQyeDIwMDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-                            <div class="caption">
-                                <h3>Thumbnail label</h3>
-                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                            </div>
-                        </div>
+            {{#if *pager.request.isRejected}}
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" ($click)="*pager.refresh()" aria-hidden="true">×</button>
+                {{#if *pager.request.reason.error.message}}
+                {{*pager.request.reason.error.message}}
+                {{else}}
+                Something bad happened
+                {{/if}}
+            </div>
+            {{else}}
+            {{#each *pager.paginatedItems}}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    {{#if keyArtImages.length}}
+                    <img alt="" src="{{keyArtImages.0.url}}" style="height: 200px; width: 100%; display: block;">
+                    {{else}}
+                    <img alt="" src="{{cardImages.0.url}}" style="height: 200px; width: 100%; display: block;">
+                    {{/if}}
+                    <div class="caption">
+                        <h3>{{headline}}</h3>
+                        <p class="synopsis">{{synopsis}}</p>
+                        <p><a href="{{routeUrl page='moviedetail' slug=id}}" class="btn btn-info" role="button">Info</a></p>
                     </div>
-                {{/each}}
+                </div>
+            </div>
+            {{/each}}
+            {{/if}}
             {{/if}}
         </div>
         <div class="row">
             <div class="text-center">
-                <page-count {page-count}="*pager.PageCount" {(current-page)}="*pager.CurrentPage" maxpages="10"></page-count>
+                <page-count {page-count}="*pager.pageCount" {(current-page)}="*pager.currentPage" maxpages="10"></page-count>
             </div>
         </div>
     </div>

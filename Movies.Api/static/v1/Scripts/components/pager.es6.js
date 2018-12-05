@@ -6,18 +6,18 @@ export default can.Component.extend({
     tag: "pager",
     template: "<content/>",
     viewModel: can.Map.extend({
-        Prev: function () {
-            if (this.CanPrev === true) {
-                this.Offset = this.Offset - this.limit;
+        prev: function () {
+            if (this.canPrev === true) {
+				this.offset = this.offset - this.limit;
             }
         },
-        Next: function () {
-            if (this.CanNext === true) {
-                this.Offset = this.Offset + this.limit;
+        next: function () {
+            if (this.canNext === true) {
+				this.offset = this.offset + this.limit;
             }
         },
-        ChangePage: function (pageNumber) {
-            this.CurrentPage = pageNumber;
+        changePage: function (pageNumber) {
+            this.currentPage = pageNumber;
         },
         isToggled: function (value) {
             let checked = this.selectedRows.indexOf(value);
@@ -61,22 +61,22 @@ export default can.Component.extend({
                 Type: can.List,
                 Value: can.List
             },
-            PaginatedItems: {
+            paginatedItems: {
                 get: function () {
                     if (this.items.length > 0) {
-                        let pagedResults = Enumerable.From(this.items).Skip(this.Offset).Take(this.limit).ToArray();
+                        let pagedResults = Enumerable.From(this.items).Skip(this.offset).Take(this.limit).ToArray();
                         return pagedResults;
                     }
                     else
                         return [];
                 }
             },
-            Count: {
+            count: {
                 get: function () {
                     return this.items.length;
                 }
             },
-            Offset: {
+            offset: {
                 type: "number",
                 value: 0
             },
@@ -84,49 +84,49 @@ export default can.Component.extend({
                 type: "number",
                 value: 10
             },
-            CanNext: {
+            canNext: {
                 get: function () {
-                    let cannext = this.Offset < this.Count - this.limit;
+					let cannext = this.offset < this.count - this.limit;
                     return cannext;
                 }
             },
-            CanPrev: {
+            canPrev: {
                 get: function () {
-                    let canprev = this.Offset > 0;
+					let canprev = this.offset > 0;
                     return canprev;
                 }
             },
-            CurrentPage: {
+            currentPage: {
                 get: function () {
-                    return Math.floor(this.Offset / this.limit) + 1;
+					return Math.floor(this.offset / this.limit) + 1;
                 },
                 set: function (newVal) {
-                    this.Offset = (parseInt(newVal, 10) - 1) * this.limit;
+					this.offset = (parseInt(newVal, 10) - 1) * this.limit;
                 }
             },
-            PageCount: {
+            pageCount: {
                 get: function () {
-                    return this.Count ?
-                        Math.ceil(this.Count / this.limit) : null;
+					return this.count ?
+						Math.ceil(this.count / this.limit) : null;
                 }
             },
-            HasPages: {
+            hasPages: {
                 get: function () {
-                    return this.PageCount > 1;
+					return this.pageCount > 1;
                 }
             },
             pageLimit: {
                 type: "number",
                 value: 10
             },
-            Pages: {
+            pages: {
                 get: function () {
-                    let currentPage = this.CurrentPage;
+                    let currentPage = this.currentPage;
                     let pageCount = this.pageLimit;
                     let pageOffset = currentPage - (pageCount / 2) > 0 ? Math.ceil(currentPage - (pageCount / 2)) : 0;
                     let hasNonPage = true;
-                    if (pageOffset + pageCount > this.PageCount) {
-                        pageCount = this.PageCount - pageOffset;
+                    if (pageOffset + pageCount > this.pageCount) {
+                        pageCount = this.pageCount - pageOffset;
                         hasNonPage = false;
                     }
                     return new can.List(_.times(hasNonPage ? pageCount + 1 : pageCount, function (i) {
@@ -157,13 +157,13 @@ export default can.Component.extend({
             this.viewModel.selectedRows = [];
         },
         '{items} add': function () {
-            this.viewModel.CurrentPage = 1;
+            this.viewModel.currentPage = 1;
         },
         '{items} remove': function () {
-            this.viewModel.CurrentPage = 1;
+            this.viewModel.currentPage = 1;
         },
         "{viewModel} items set": function () {
-            this.viewModel.CurrentPage = 1;
+            this.viewModel.currentPage = 1;
         }
     }
 });

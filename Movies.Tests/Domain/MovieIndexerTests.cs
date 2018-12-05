@@ -4,6 +4,7 @@ using Infrastructure.ElasticSearch.Indexer;
 using Moq;
 using Movies.Domain.Components;
 using Movies.Domain.Core;
+using Movies.Domain.Services;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
@@ -17,11 +18,14 @@ namespace Movies.Tests.Domain
     public class MovieIndexerTests
     {
         private Mock<IElasticSearchIndexer> elasticSearchIndexerMock;
+        private Mock<IMovieAssetLoader> assetLoaderMock;
         private Faker<Movie> testMovies;
 
         [OneTimeSetUp]
         public void Setup()
         {
+            this.assetLoaderMock = new Mock<IMovieAssetLoader>();
+            assetLoaderMock.Setup(t => t.LoadAssetsAsync(It.IsAny<JObject>())).Returns<JObject>(e => Task.FromResult<object>(null));
             this.elasticSearchIndexerMock = new Mock<IElasticSearchIndexer>();
             elasticSearchIndexerMock.Setup(t => t.InsertIndexesAsync(It.IsAny<IEnumerable<Movie>>())).Returns<IEnumerable<Movie>>(e => Task.FromResult<object>(null));
             this.testMovies = new AutoFaker<Movie>()
@@ -44,7 +48,7 @@ namespace Movies.Tests.Domain
 
         private async Task IndexFakeMovies(int numberOfDesiredMovies)
         {
-            var indexer = new MovieIndexer(elasticSearchIndexerMock.Object);
+            var indexer = new MovieIndexer(elasticSearchIndexerMock.Object, assetLoaderMock.Object);
             using (var fakeMoviesEnumerator = testMovies.Generate(numberOfDesiredMovies).GetEnumerator())
             {
                 var numberOfIndexedMovies = await indexer.IndexMoviesAsync(fakeMoviesEnumerator);

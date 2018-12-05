@@ -23,13 +23,14 @@
         moment: "moment/moment",
         parsley: "parsleyjs/dist/parsley",
         postal: "postal.js/lib/postal",
-        bootpag: 'bootpag/lib/jquery.bootpag'
+		bootpag: 'bootpag/lib/jquery.bootpag',
+		postal: "postal.js/lib/postal"
     },
     // So that the template library is included in the build. You don't need
     // this if you explicitly load the template library elsewhere in your app.
     shim: {
         babel: {
-            deps: ['babel_polyfill', 'promise_done_polyfill']
+            deps: ['babel_polyfill']
         },
         stache: ["can"],
         bootpag: ["jquery"],

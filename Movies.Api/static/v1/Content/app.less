@@ -3,11 +3,6 @@
         padding-top: 50px;
     }
 
-    .page {
-        padding: 40px 15px;
-        text-align: center;
-    }
-
     .form-panel {
         position: relative;
         padding: 45px 15px 15px;
@@ -20,7 +15,7 @@
     }
 
     @media (min-width: 768px) {
-        .bs-example {
+        .form-panel {
             margin-right: 0;
             margin-left: 0;
             background-color: #fff;
@@ -30,5 +25,12 @@
             -webkit-box-shadow: none;
             box-shadow: none;
         }
+    }
+
+    .caption > p.synopsis {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
     }
 }

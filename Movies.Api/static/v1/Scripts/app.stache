@@ -19,7 +19,7 @@
 </nav>
 <div class="container">
     <div class="page">
-        <h1>{{title}} ({{location.page}})</h1>
+        <h1>{{title}}</h1>
         {{#switch location.page}}
             {{#case "insertmovies"}}
             <can-import from="pages/insertmovies" />

@@ -23,7 +23,8 @@ define(["exports", "can.full", "jquery", "underscore"], function (exports, _can,
                 if (object.attr && (object._data && object._data[propertyName] || object._computedAttrs && object._computedAttrs[propertyName] && object._computedAttrs[propertyName].compute)) {
                     return object.attr(propertyName);
                 }return object[propertyName];
-            }, setInterceptor: function setInterceptor(object, propertyName, value) {
+            },
+            setInterceptor: function setInterceptor(object, propertyName, value) {
                 if (object.attr) {
                     return object.attr(propertyName, value);
                 } else {
@@ -38,18 +39,18 @@ define(["exports", "can.full", "jquery", "underscore"], function (exports, _can,
         tag: "pager",
         template: "<content/>",
         viewModel: _proxy.getInterceptor(_can2.default, "Map").extend({
-            Prev: function Prev() {
-                if (_proxy.getInterceptor(this, "CanPrev") === true) {
-                    _proxy.setInterceptor(this, "Offset", _proxy.getInterceptor(this, "Offset") - _proxy.getInterceptor(this, "limit"));
+            prev: function prev() {
+                if (_proxy.getInterceptor(this, "canPrev") === true) {
+                    _proxy.setInterceptor(this, "offset", _proxy.getInterceptor(this, "offset") - _proxy.getInterceptor(this, "limit"));
                 }
             },
-            Next: function Next() {
-                if (_proxy.getInterceptor(this, "CanNext") === true) {
-                    _proxy.setInterceptor(this, "Offset", _proxy.getInterceptor(this, "Offset") + _proxy.getInterceptor(this, "limit"));
+            next: function next() {
+                if (_proxy.getInterceptor(this, "canNext") === true) {
+                    _proxy.setInterceptor(this, "offset", _proxy.getInterceptor(this, "offset") + _proxy.getInterceptor(this, "limit"));
                 }
             },
-            ChangePage: function ChangePage(pageNumber) {
-                _proxy.setInterceptor(this, "CurrentPage", pageNumber);
+            changePage: function changePage(pageNumber) {
+                _proxy.setInterceptor(this, "currentPage", pageNumber);
             },
             isToggled: function isToggled(value) {
                 var checked = _proxy.getInterceptor(this, "selectedRows").indexOf(value);
@@ -90,20 +91,20 @@ define(["exports", "can.full", "jquery", "underscore"], function (exports, _can,
                     Type: _proxy.getInterceptor(_can2.default, "List"),
                     Value: _proxy.getInterceptor(_can2.default, "List")
                 },
-                PaginatedItems: {
+                paginatedItems: {
                     get: function get() {
                         if (_proxy.getInterceptor(_proxy.getInterceptor(this, "items"), "length") > 0) {
-                            var pagedResults = Enumerable.From(_proxy.getInterceptor(this, "items")).Skip(_proxy.getInterceptor(this, "Offset")).Take(_proxy.getInterceptor(this, "limit")).ToArray();
+                            var pagedResults = Enumerable.From(_proxy.getInterceptor(this, "items")).Skip(_proxy.getInterceptor(this, "offset")).Take(_proxy.getInterceptor(this, "limit")).ToArray();
                             return pagedResults;
                         } else return [];
                     }
                 },
-                Count: {
+                count: {
                     get: function get() {
                         return _proxy.getInterceptor(_proxy.getInterceptor(this, "items"), "length");
                     }
                 },
-                Offset: {
+                offset: {
                     type: "number",
                     value: 0
                 },
@@ -111,48 +112,48 @@ define(["exports", "can.full", "jquery", "underscore"], function (exports, _can,
                     type: "number",
                     value: 10
                 },
-                CanNext: {
+                canNext: {
                     get: function get() {
-                        var cannext = _proxy.getInterceptor(this, "Offset") < _proxy.getInterceptor(this, "Count") - _proxy.getInterceptor(this, "limit");
+                        var cannext = _proxy.getInterceptor(this, "offset") < _proxy.getInterceptor(this, "count") - _proxy.getInterceptor(this, "limit");
                         return cannext;
                     }
                 },
-                CanPrev: {
+                canPrev: {
                     get: function get() {
-                        var canprev = _proxy.getInterceptor(this, "Offset") > 0;
+                        var canprev = _proxy.getInterceptor(this, "offset") > 0;
                         return canprev;
                     }
                 },
-                CurrentPage: {
+                currentPage: {
                     get: function get() {
-                        return Math.floor(_proxy.getInterceptor(this, "Offset") / _proxy.getInterceptor(this, "limit")) + 1;
+                        return Math.floor(_proxy.getInterceptor(this, "offset") / _proxy.getInterceptor(this, "limit")) + 1;
                     },
                     set: function set(newVal) {
-                        _proxy.setInterceptor(this, "Offset", (parseInt(newVal, 10) - 1) * _proxy.getInterceptor(this, "limit"));
+                        _proxy.setInterceptor(this, "offset", (parseInt(newVal, 10) - 1) * _proxy.getInterceptor(this, "limit"));
                     }
                 },
-                PageCount: {
+                pageCount: {
                     get: function get() {
-                        return _proxy.getInterceptor(this, "Count") ? Math.ceil(_proxy.getInterceptor(this, "Count") / _proxy.getInterceptor(this, "limit")) : null;
+                        return _proxy.getInterceptor(this, "count") ? Math.ceil(_proxy.getInterceptor(this, "count") / _proxy.getInterceptor(this, "limit")) : null;
                     }
                 },
-                HasPages: {
+                hasPages: {
                     get: function get() {
-                        return _proxy.getInterceptor(this, "PageCount") > 1;
+                        return _proxy.getInterceptor(this, "pageCount") > 1;
                     }
                 },
                 pageLimit: {
                     type: "number",
                     value: 10
                 },
-                Pages: {
+                pages: {
                     get: function get() {
-                        var currentPage = _proxy.getInterceptor(this, "CurrentPage");
+                        var currentPage = _proxy.getInterceptor(this, "currentPage");
                         var pageCount = _proxy.getInterceptor(this, "pageLimit");
                         var pageOffset = currentPage - pageCount / 2 > 0 ? Math.ceil(currentPage - pageCount / 2) : 0;
                         var hasNonPage = true;
-                        if (pageOffset + pageCount > _proxy.getInterceptor(this, "PageCount")) {
-                            pageCount = _proxy.getInterceptor(this, "PageCount") - pageOffset;
+                        if (pageOffset + pageCount > _proxy.getInterceptor(this, "pageCount")) {
+                            pageCount = _proxy.getInterceptor(this, "pageCount") - pageOffset;
                             hasNonPage = false;
                         }
                         return new (_proxy.getInterceptor(_can2.default, "List"))(_underscore2.default.times(hasNonPage ? pageCount + 1 : pageCount, function (i) {
@@ -182,13 +183,13 @@ define(["exports", "can.full", "jquery", "underscore"], function (exports, _can,
                 _proxy.setInterceptor(_proxy.getInterceptor(this, "viewModel"), "selectedRows", []);
             },
             '{items} add': function itemsAdd() {
-                _proxy.setInterceptor(_proxy.getInterceptor(this, "viewModel"), "CurrentPage", 1);
+                _proxy.setInterceptor(_proxy.getInterceptor(this, "viewModel"), "currentPage", 1);
             },
             '{items} remove': function itemsRemove() {
-                _proxy.setInterceptor(_proxy.getInterceptor(this, "viewModel"), "CurrentPage", 1);
+                _proxy.setInterceptor(_proxy.getInterceptor(this, "viewModel"), "currentPage", 1);
             },
             "{viewModel} items set": function viewModelItemsSet() {
-                _proxy.setInterceptor(_proxy.getInterceptor(this, "viewModel"), "CurrentPage", 1);
+                _proxy.setInterceptor(_proxy.getInterceptor(this, "viewModel"), "currentPage", 1);
             }
         }
     });

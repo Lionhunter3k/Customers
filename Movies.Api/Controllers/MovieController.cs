@@ -3,6 +3,7 @@ using Infrastructure.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Domain.Services;
+using Movies.Queries.Handler;
 using Movies.Queries.Model;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ using System.Threading.Tasks;
 namespace Movies.Api.Controllers
 {
     [ValidateModelFilter]
-    [UnhandledExceptionFilter]
+    [UnhandledExceptionFilter(ExceptionMessage = "Something bad happened")]
+    [UnhandledExceptionFilter(ExceptionType = typeof(MovieListException))]
     public class MovieController : ControllerBase
     {
         private readonly IMovieParser _movieParser;
