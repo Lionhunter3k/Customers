@@ -26,7 +26,7 @@ module.exports = function (grunt) {
             options: {
                 presets: ["es2015", "es2016", "es2017"],
                 plugins: ['transform-es2015-modules-amd', require('./property-babel')],
-                sourceMaps: false
+                sourceMaps: true
             },
             dist: {
                 files: [{

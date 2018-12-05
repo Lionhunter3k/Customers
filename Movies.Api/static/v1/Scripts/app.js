@@ -39,8 +39,8 @@ define(['exports', 'can.full', 'jquery', 'stache!app.stache'], function (exports
     var appCtor = _proxy.getInterceptor(_can2.default, 'Control').extend({}, {
         setup: function setup(element, options) {
             options = options || {};
-            _can2.default.route('/v1/movies/:page', { page: 'movielist' });
-            _can2.default.route('/v1/movies/:page/:slug', { slug: null });
+            _can2.default.route('/v1/movies/:page', { page: "movielist" });
+            _can2.default.route('/v1/movies/:page/:slug', { page: "movielist", slug: null });
             _proxy.setInterceptor(options, 'appState', new (_proxy.getInterceptor(_can2.default, 'Map'))({ location: {}, title: '' }));
             _proxy.getInterceptor(_can2.default, 'route').map(_proxy.getInterceptor(_proxy.getInterceptor(options, 'appState'), 'location'));
             return this._super(element, options);
@@ -65,3 +65,4 @@ define(['exports', 'can.full', 'jquery', 'stache!app.stache'], function (exports
 
     exports.default = appCtor;
 });
+//# sourceMappingURL=app.js.map

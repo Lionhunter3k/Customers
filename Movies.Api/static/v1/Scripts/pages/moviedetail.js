@@ -65,3 +65,4 @@ define(['exports', 'jquery', 'can.full', 'stache!pages/moviedetail.stache'], fun
 		})
 	});
 });
+//# sourceMappingURL=moviedetail.js.map

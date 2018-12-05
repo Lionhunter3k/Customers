@@ -51,3 +51,4 @@ define(['exports', 'jquery', 'can.full', 'stache!pages/movielist.stache'], funct
         })
     });
 });
+//# sourceMappingURL=movielist.js.map
