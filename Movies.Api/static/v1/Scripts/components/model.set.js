@@ -62,3 +62,4 @@ define(['exports', 'can.full', 'underscore', 'jquery'], function (exports, _can,
 		new SetterControl(element, { source: sourceCompute, destination: destinationCompute, original: originalValue });
 	});
 });
+//# sourceMappingURL=model.set.js.map

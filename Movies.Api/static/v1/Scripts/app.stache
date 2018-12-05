@@ -21,6 +21,14 @@
     <div class="page">
         <h1>{{title}}</h1>
         {{#switch location.page}}
+        {{#case ""}}
+        <can-import from="pages/movielist" />
+        <movie-list {location}="location" {^title}="title"></movie-list>
+        {{/case}}
+        {{#case "movielist"}}
+        <can-import from="pages/movielist" />
+        <movie-list {location}="location" {^title}="title"></movie-list>
+        {{/case}}
         {{#case "insertmovies"}}
         <can-import from="pages/insertmovies" />
         <insert-movies {location}="location" {^title}="title"></insert-movies>
@@ -30,8 +38,7 @@
         <movie-detail {location}="location" {^title}="title"></movie-detail>
         {{/case}}
         {{#default}}
-        <can-import from="pages/movielist" />
-        <movie-list {location}="location" {^title}="title"></movie-list>
+        <div class="alert alert-danger" role="alert"> <strong>404</strong> No such page. </div>
         {{/default}}
         {{/switch}}
     </div>

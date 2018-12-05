@@ -63,3 +63,4 @@ define(['exports', 'can.full', 'jquery', 'services/http'], function (exports, _c
 		viewModel: requestViewModelCtor
 	});
 });
+//# sourceMappingURL=request.js.map

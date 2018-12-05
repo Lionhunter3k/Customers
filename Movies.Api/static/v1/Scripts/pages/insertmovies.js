@@ -127,3 +127,4 @@ define(['exports', 'jquery', 'can.full', 'stache!pages/insertmovies.stache', 'se
 		})
 	});
 });
+//# sourceMappingURL=insertmovies.js.map

@@ -61,3 +61,4 @@ define(['exports', 'can', 'lodash'], function (exports, _can, _lodash) {
         new Value(element, { value: valueCompute });
     });
 });
+//# sourceMappingURL=model.value.js.map

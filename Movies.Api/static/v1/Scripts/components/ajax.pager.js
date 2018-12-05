@@ -278,3 +278,4 @@ define(['exports', 'can.full', 'jquery', 'underscore', 'services/http'], functio
         }
     });
 });
+//# sourceMappingURL=ajax.pager.js.map

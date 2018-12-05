@@ -92,3 +92,4 @@ define(['exports', 'can.full', 'jquery', 'bootpag'], function (exports, _can, _j
         }
     });
 });
+//# sourceMappingURL=page.count.js.map

@@ -64,3 +64,4 @@ define(['exports', 'jquery', 'can.full', 'postal'], function (exports, _jquery, 
 
 	var channel = _postal2.default.channel("ajax");
 });
+//# sourceMappingURL=http.js.map

@@ -36,3 +36,4 @@ define(['exports', 'can.full', 'stache!components/loading.stache'], function (ex
         template: _loading2.default
     });
 });
+//# sourceMappingURL=loading.js.map

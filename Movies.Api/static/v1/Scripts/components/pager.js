@@ -193,3 +193,4 @@ define(["exports", "can.full", "jquery", "underscore"], function (exports, _can,
         }
     });
 });
+//# sourceMappingURL=pager.js.map
