@@ -3,7 +3,7 @@
         padding-top: 50px;
     }
 
-    .form-panel {
+    .content-panel {
         position: relative;
         padding: 45px 15px 15px;
         margin: 0 -15px 15px;
@@ -15,7 +15,7 @@
     }
 
     @media (min-width: 768px) {
-        .form-panel {
+        .content-panel {
             margin-right: 0;
             margin-left: 0;
             background-color: #fff;
@@ -27,10 +27,96 @@
         }
     }
 
+    .content-panel > .small-header {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #959595;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
     .caption > p.synopsis {
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
+    }
+
+    .huge {
+        font-size: 40px;
+    }
+
+    .panel-green {
+        border-color: #5cb85c;
+    }
+
+    .panel-green > .panel-heading {
+        border-color: #5cb85c;
+        color: white;
+        background-color: #5cb85c;
+    }
+
+    .panel-green > a {
+        color: #5cb85c;
+    }
+
+    .panel-green > a:hover {
+        color: #3d8b3d;
+    }
+
+    .panel-red {
+        border-color: #d9534f;
+    }
+
+    .panel-red > .panel-heading {
+        border-color: #d9534f;
+        color: white;
+        background-color: #d9534f;
+    }
+
+    .panel-red > a {
+        color: #d9534f;
+    }
+
+    .panel-red > a:hover {
+        color: #b52b27;
+    }
+
+    .panel-yellow {
+        border-color: #f0ad4e;
+    }
+
+    .panel-yellow > .panel-heading {
+        border-color: #f0ad4e;
+        color: white;
+        background-color: #f0ad4e;
+    }
+
+    .panel-yellow > a {
+        color: #f0ad4e;
+    }
+
+    .panel-yellow > a:hover {
+        color: #df8a13;
+    }
+
+    .movie-cards .panel-heading {
+        height: 170px;
+    }
+
+    .user-content:first-letter {
+        text-transform: uppercase;
+    }
+
+    .caption > .movie-caption-title {
+        height: 50px;
+    }
+
+    a.genre-link {
+        margin-top: 5px;
+        margin-right: 5px;
     }
 }

@@ -1,25 +1,3 @@
-﻿<div class="busy-loader">
-    <div class="loading-ball-wrapper ball-1">
-        <div class="loading-ball">
-        </div>
-    </div>
-    <div class="loading-ball-wrapper ball-2">
-        <div class="loading-ball">
-        </div>
-    </div>
-    <div class="loading-ball-wrapper ball-3">
-        <div class="loading-ball">
-        </div>
-    </div>
-    <div class="loading-ball-wrapper ball-4">
-        <div class="loading-ball">
-        </div>
-    </div>
-    <div class="loading-ball-wrapper ball-5">
-        <div class=" loading-ball">
-        </div>
-    </div>
-    {{#if message}}
-    <span class="load-message">{{message}}</span>
-    {{/if}}
+﻿<div class="loader">
 </div>
+<content />

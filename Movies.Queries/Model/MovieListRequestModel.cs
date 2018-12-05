@@ -24,6 +24,8 @@ namespace Movies.Queries.Model
         public string Query { get; set; }
 
         public MovieSort Sort { get; set; }
+
+        public string Id { get; set; }
     }
 
     public enum MovieSort

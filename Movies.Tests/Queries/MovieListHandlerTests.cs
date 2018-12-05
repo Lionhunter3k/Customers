@@ -59,7 +59,7 @@ namespace Movies.Tests.Queries
         public async Task ClearElasticSearchIndexes()
         {
             await ElasticSearchIndexer.DeleteAllIndexesAsync();
-            this._handler = new MovieListHandler(base.ElasticSearchConfiguration);
+            this._handler = new MovieListHandler(base.ElasticSearchConfiguration.GetClient());
         }
 
         [Test]

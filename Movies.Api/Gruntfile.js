@@ -141,13 +141,13 @@ module.exports = function (grunt) {
         //},
         css_url_replace: {
             options: {
-                staticRoot: './'
+				staticRoot: './static'
             },
             replace: {
                 expand: true,
-                cwd: 'static/v1/Content',
+				cwd: 'static/v1/Content',
                 src: ['**/*.min.css'],
-                dest: 'static/v1/Content'
+				dest: 'static/v1/Content'
             }
         }
     });

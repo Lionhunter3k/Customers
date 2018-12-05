@@ -4,7 +4,7 @@ import template from 'stache!pages/insertmovies.stache';
 import http from 'services/http';
 
 export default can.Component.extend({
-    tag: "insertmovies",
+    tag: "insert-movies",
     template: template,
     viewModel: can.Map.extend({
         define: {

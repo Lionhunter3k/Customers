@@ -2,7 +2,7 @@
 <can-import from="attributes/model.value" />
 <can-import from="attributes/parsley.validate" />
 <p>You can load a json dataset to seed the ElasticSearch database. The json file can be any size.</p>
-<div class="form-panel">
+<div class="content-panel">
     <form parsley-validate ($parsley.valid)="sendFile($element)">
         {{#if requestPromise.isResolved}}
         <div class="alert alert-success alert-dismissable">
@@ -25,7 +25,7 @@
             <input type="file" required id="dataSet" data-parsley-required-message="Choose a file, please. No file, no cookie." ($change)="attr('file', $element)">
         </div>
         {{#if requestPromise.isPending}}
-        <loading></loading>
+        <loading><span>Loading</span></loading>
         {{else}}
         <button type="submit" class="btn btn-default">Submit</button>
         {{/if}}
