@@ -27,10 +27,12 @@ namespace Movies.Domain.Components
             _elasticSearchIndexer.UseExistingIndexes = true;
             foreach (var chunk in chunks)
             {
+                var pendingAssets = new List<Task>();
                 foreach(var movie in chunk)
                 {
-                    await _movieAssetLoader.LoadAssetsAsync(movie.Data);
+                    pendingAssets.Add(_movieAssetLoader.LoadAssetsAsync(movie.Data));
                 }
+                await Task.WhenAll(pendingAssets);
                 indexedMovies += chunk.Count;
                 pendingIndexers.Add(_elasticSearchIndexer.InsertIndexesAsync(chunk));
             }
