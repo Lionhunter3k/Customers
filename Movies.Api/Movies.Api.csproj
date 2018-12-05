@@ -26,10 +26,15 @@
     <ProjectReference Include="..\Movies.Queries\Movies.Queries.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="static\**\*">
+    <Content Include="static\**\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="static\v1\Scripts\components\request.es6.js" />
+    <None Remove="static\v1\Scripts\pages\moviedetail.es6.js" />
+    <None Remove="static\v1\Scripts\pages\moviedetail.stache" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

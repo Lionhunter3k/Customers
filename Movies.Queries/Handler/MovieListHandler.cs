@@ -28,6 +28,8 @@ namespace Movies.Queries.Handler
                 var result = await _elasticClient.SearchAsync<Movie>(s => s.Query(q =>
                 {
                     QueryContainer query = null;
+                    if (!string.IsNullOrEmpty(message.Request.Id))
+                        query &= q.Term(p => p.Id, message.Request.Id);
                     if (message.Request.MinYear.HasValue)
                     {
                         query &= q.Range(c => c

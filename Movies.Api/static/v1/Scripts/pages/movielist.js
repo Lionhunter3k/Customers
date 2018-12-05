@@ -36,7 +36,7 @@ define(['exports', 'jquery', 'can.full', 'stache!pages/movielist.stache'], funct
                 var original = this.getInterceptor(object, propertyName);this.setInterceptor(object, propertyName, value - 1);return original;
             } };
     }exports.default = _proxy.getInterceptor(_can2.default, 'Component').extend({
-        tag: "movielist",
+        tag: "movie-list",
         template: _movielist2.default,
         viewModel: _proxy.getInterceptor(_can2.default, 'Map').extend({
             define: {

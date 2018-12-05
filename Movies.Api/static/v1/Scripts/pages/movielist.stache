@@ -20,7 +20,7 @@
     </div>
     <div class="col-md-9">
         <div class="row">
-            <ajax-pager read="/api/movies" {additional-data}="location" read-type="get" current-page-name="page" limit-name="pageSize" limit="10" *pager />
+            <ajax-pager read="/api/movies" {additional-data}="location" read-type="get" current-page-name="page" limit-name="pageSize" limit="9" *pager />
             {{#if *pager.loading}}
             <loading></loading>
             {{else}}
@@ -43,7 +43,7 @@
                     <img alt="" src="{{cardImages.0.url}}" style="height: 200px; width: 100%; display: block;">
                     {{/if}}
                     <div class="caption">
-                        <h3>{{headline}}</h3>
+                        <h3 class="movie-caption-title">{{headline}}</h3>
                         <p class="synopsis">{{synopsis}}</p>
                         <p><a href="{{routeUrl page='moviedetail' slug=id}}" class="btn btn-info" role="button">Info</a></p>
                     </div>
