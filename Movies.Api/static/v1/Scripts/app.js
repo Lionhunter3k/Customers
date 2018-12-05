@@ -20,7 +20,7 @@ define(['exports', 'can.full', 'jquery', 'stache!app.stache'], function (exports
     if (!window._proxy) {
         window._proxy = {
             getInterceptor: function getInterceptor(object, propertyName) {
-                if (object.attr && (object._data && object._data[propertyName] || object._computedAttrs && object._computedAttrs[propertyName] && object._computedAttrs[propertyName].compute)) {
+                if (object.attr && (object._data && object._data[propertyName] !== undefined || object._computedAttrs && object._computedAttrs[propertyName])) {
                     return object.attr(propertyName);
                 }return object[propertyName];
             }, setInterceptor: function setInterceptor(object, propertyName, value) {

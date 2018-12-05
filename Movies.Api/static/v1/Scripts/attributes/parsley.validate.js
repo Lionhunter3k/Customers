@@ -22,9 +22,10 @@ define(['exports', 'can.full', 'jquery', 'parsley', 'enumerable'], function (exp
     if (!window._proxy) {
         window._proxy = {
             getInterceptor: function getInterceptor(object, propertyName) {
-                if (object.attr && (object._data && object._data[propertyName] || object._computedAttrs && object._computedAttrs[propertyName] && object._computedAttrs[propertyName].compute)) {
+                if (object.attr && (object._data && object._data[propertyName] !== undefined || object._computedAttrs && object._computedAttrs[propertyName])) {
                     return object.attr(propertyName);
-                }return object[propertyName];
+                }
+                return object[propertyName];
             }, setInterceptor: function setInterceptor(object, propertyName, value) {
                 if (object.attr) {
                     return object.attr(propertyName, value);
@@ -44,8 +45,7 @@ define(['exports', 'can.full', 'jquery', 'parsley', 'enumerable'], function (exp
         classHandler: function classHandler(e) {
             return _proxy.getInterceptor(e, '$element').closest('.form-group');
         },
-        errorsWrapper: "<span class='help-block'></span>",
-        errorTemplate: "<span></span>"
+        errorsWrapper: "<span class='help-block'></span>", errorTemplate: "<span></span>"
     };
 
     var validationControlCtor = _can2.default.Control({
