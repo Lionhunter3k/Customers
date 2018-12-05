@@ -19,6 +19,7 @@ using Movies.Queries.Model;
 using Movies.Domain.Components;
 using Api.Infrastructure;
 using Microsoft.Extensions.Configuration;
+using CloudinaryDotNet;
 
 namespace Movies.Api
 {
@@ -70,6 +71,8 @@ namespace Movies.Api
             base.ConfigureServices(services);
 
             services.EagerConfigure<MovieAssetLoaderOptions>(Configuration.GetSection("MovieAssetLoader"));
+
+            services.EagerConfigure<Account>(Configuration.GetSection("Cloudinary"));
 
             services.AddRouting();
 
