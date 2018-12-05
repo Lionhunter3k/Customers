@@ -1,21 +1,31 @@
 ﻿import can from 'can.full';
 import $ from 'jquery';
 import parsley from 'parsley';
-import Enumerable from "Enumerable";
+import Enumerable from "enumerable";
 
-var validationControlCtor = can.Control({
+let bootstrapOptions = {
+	successClass: "has-success",
+	errorClass: "has-error",
+	classHandler: function (e) {
+		return e.$element.closest('.form-group');
+	},
+	errorsWrapper: "<span class='help-block'></span>",
+	errorTemplate: "<span></span>"
+};
+
+let validationControlCtor = can.Control({
     init: function (element, options) {
-        if (element.is('form')) {
-            element.parsley();
+		if (element.is('form')) {
+			element.parsley(bootstrapOptions);
         }
     },
     '{isEnabled} change': function () {
         this.element.find(':input').each((_i, v) => {
             if (this.options.isEnabled()) {
-                v.parsley().destroy();
+                $(v).parsley().destroy();
             }
             else {
-                v.parsley();
+				$(v).parsley(bootstrapOptions);
             }
         });
     },
@@ -23,20 +33,35 @@ var validationControlCtor = can.Control({
         if (!this.options.enabledOnSubmit()) {
             if (this.options.isEnabled()) {
                 this.element.find(':input').each((_i, v) => {
-                    v.parsley().destroy();
+                    $(v).parsley().destroy();
                 });
                 this.options.isEnabled(false);
             }
         }
         else {
             if (!this.options.isEnabled()) {
-                this.element.find(':input').each((_i, v) => {
-                    v.parsley();
-                });
                 this.options.isEnabled(true);
-            }
+			}
+			this.validateElements();
         }
-    },
+	},
+	validateElements: function () {
+		let valid = true;
+		this.element.find(':input').not(':disabled').each((_i, v) => {
+			valid = $(v).parsley().isValid() && valid;//TODO_CHECK PARSLEY
+		});
+
+		this.options.valid(valid);
+
+		this.element.trigger('parsley.validate', [this.options.valid()]);
+
+		if (valid) {
+			this.element.trigger('parsley.valid', []);
+		}
+		else {
+			this.element.trigger('parsley.invalid', []);
+		}
+	},
     '{window} {submitButtonSelector} click': "validateOnSubmit",
     'submit': "validateOnSubmit",
     '.js-validate-section click': function () {
@@ -44,29 +69,17 @@ var validationControlCtor = can.Control({
         if (!this.options.isEnabled()) {
             this.options.isEnabled(true);
         }
-        let valid = true;
-        this.element.find(':input').not(':disabled').each((_i, v) => {
-            valid = v.parsley().isValid() && valid;//TODO_CHECK PARSLEY
-        });
-
-        this.options.valid(valid);
-
-        this.element.trigger('parsley.validate', [this.options.valid()]);
-
-        if (valid) {
-            this.element.trigger('parsley.valid', []);
-        }
-        else {
-            this.element.trigger('parsley.invalid', []);
-        }
-    },
-    '.js-reset-section click': function () {
-        this.element.find(':input').each((_i, v) => {
-            v.parsley().reset();
-        });
-        this.viewModel.valid(true);
-        this.element.trigger('parsley.reset', []);
-    }
+		this.validateElements();
+	},
+	'reset': 'resetSection',
+	'.js-reset-section click': 'resetSection',
+	resetSection: function () {
+		this.element.find(':input').each((_i, v) => {
+			$(v).parsley().reset();
+		});
+		this.options.valid(true);
+		this.element.trigger('parsley.reset', []);
+	}
 });
 
 export default can.view.attr("parsley-validate", function (element, attrData) {

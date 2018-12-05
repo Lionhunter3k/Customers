@@ -11,10 +11,12 @@ namespace Movies.Domain.Components
     public class MovieIndexer : IMovieIndexer
     {
         private readonly IElasticSearchIndexer _elasticSearchIndexer;
+        private readonly IMovieAssetLoader _movieAssetLoader;
 
-        public MovieIndexer(IElasticSearchIndexer elasticSearchIndexer)
+        public MovieIndexer(IElasticSearchIndexer elasticSearchIndexer, IMovieAssetLoader movieAssetLoader)
         {
             this._elasticSearchIndexer = elasticSearchIndexer;
+            this._movieAssetLoader = movieAssetLoader;
         }
 
         public async Task<int> IndexMoviesAsync(IEnumerator<Movie> movies)
@@ -25,6 +27,10 @@ namespace Movies.Domain.Components
             _elasticSearchIndexer.UseExistingIndexes = true;
             foreach (var chunk in chunks)
             {
+                foreach(var movie in chunk)
+                {
+                    await _movieAssetLoader.LoadAssetsAsync(movie.Data);
+                }
                 indexedMovies += chunk.Count;
                 pendingIndexers.Add(_elasticSearchIndexer.InsertIndexesAsync(chunk));
             }

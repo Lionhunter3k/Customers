@@ -1,4 +1,4 @@
-define(['exports', 'can.full', 'jquery', 'parsley', 'Enumerable'], function (exports, _can, _jquery, _parsley, _Enumerable) {
+define(['exports', 'can.full', 'jquery', 'parsley', 'enumerable'], function (exports, _can, _jquery, _parsley, _enumerable) {
     'use strict';
 
     Object.defineProperty(exports, "__esModule", {
@@ -11,7 +11,7 @@ define(['exports', 'can.full', 'jquery', 'parsley', 'Enumerable'], function (exp
 
     var _parsley2 = _interopRequireDefault(_parsley);
 
-    var _Enumerable2 = _interopRequireDefault(_Enumerable);
+    var _enumerable2 = _interopRequireDefault(_enumerable);
 
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : {
@@ -38,10 +38,20 @@ define(['exports', 'can.full', 'jquery', 'parsley', 'Enumerable'], function (exp
             } };
     }
 
+    var bootstrapOptions = {
+        successClass: "has-success",
+        errorClass: "has-error",
+        classHandler: function classHandler(e) {
+            return _proxy.getInterceptor(e, '$element').closest('.form-group');
+        },
+        errorsWrapper: "<span class='help-block'></span>",
+        errorTemplate: "<span></span>"
+    };
+
     var validationControlCtor = _can2.default.Control({
         init: function init(element, options) {
             if (element.is('form')) {
-                element.parsley();
+                element.parsley(bootstrapOptions);
             }
         },
         '{isEnabled} change': function isEnabledChange() {
@@ -49,9 +59,9 @@ define(['exports', 'can.full', 'jquery', 'parsley', 'Enumerable'], function (exp
 
             _proxy.getInterceptor(this, 'element').find(':input').each(function (_i, v) {
                 if (_proxy.getInterceptor(_this, 'options').isEnabled()) {
-                    v.parsley().destroy();
+                    (0, _jquery2.default)(v).parsley().destroy();
                 } else {
-                    v.parsley();
+                    (0, _jquery2.default)(v).parsley(bootstrapOptions);
                 }
             });
         },
@@ -59,29 +69,21 @@ define(['exports', 'can.full', 'jquery', 'parsley', 'Enumerable'], function (exp
             if (!_proxy.getInterceptor(this, 'options').enabledOnSubmit()) {
                 if (_proxy.getInterceptor(this, 'options').isEnabled()) {
                     _proxy.getInterceptor(this, 'element').find(':input').each(function (_i, v) {
-                        v.parsley().destroy();
+                        (0, _jquery2.default)(v).parsley().destroy();
                     });
                     _proxy.getInterceptor(this, 'options').isEnabled(false);
                 }
             } else {
                 if (!_proxy.getInterceptor(this, 'options').isEnabled()) {
-                    _proxy.getInterceptor(this, 'element').find(':input').each(function (_i, v) {
-                        v.parsley();
-                    });
                     _proxy.getInterceptor(this, 'options').isEnabled(true);
                 }
+                this.validateElements();
             }
         },
-        '{window} {submitButtonSelector} click': "validateOnSubmit",
-        'submit': "validateOnSubmit",
-        '.js-validate-section click': function jsValidateSectionClick() {
-            //make sure the inputs have their validations set to true
-            if (!_proxy.getInterceptor(this, 'options').isEnabled()) {
-                _proxy.getInterceptor(this, 'options').isEnabled(true);
-            }
+        validateElements: function validateElements() {
             var valid = true;
             _proxy.getInterceptor(this, 'element').find(':input').not(':disabled').each(function (_i, v) {
-                valid = v.parsley().isValid() && valid; //TODO_CHECK PARSLEY
+                valid = (0, _jquery2.default)(v).parsley().isValid() && valid; //TODO_CHECK PARSLEY
             });
 
             _proxy.getInterceptor(this, 'options').valid(valid);
@@ -94,11 +96,22 @@ define(['exports', 'can.full', 'jquery', 'parsley', 'Enumerable'], function (exp
                 _proxy.getInterceptor(this, 'element').trigger('parsley.invalid', []);
             }
         },
-        '.js-reset-section click': function jsResetSectionClick() {
+        '{window} {submitButtonSelector} click': "validateOnSubmit",
+        'submit': "validateOnSubmit",
+        '.js-validate-section click': function jsValidateSectionClick() {
+            //make sure the inputs have their validations set to true
+            if (!_proxy.getInterceptor(this, 'options').isEnabled()) {
+                _proxy.getInterceptor(this, 'options').isEnabled(true);
+            }
+            this.validateElements();
+        },
+        'reset': 'resetSection',
+        '.js-reset-section click': 'resetSection',
+        resetSection: function resetSection() {
             _proxy.getInterceptor(this, 'element').find(':input').each(function (_i, v) {
-                v.parsley().reset();
+                (0, _jquery2.default)(v).parsley().reset();
             });
-            _proxy.getInterceptor(this, 'viewModel').valid(true);
+            _proxy.getInterceptor(this, 'options').valid(true);
             _proxy.getInterceptor(this, 'element').trigger('parsley.reset', []);
         }
     });

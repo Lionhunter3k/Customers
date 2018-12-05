@@ -15,16 +15,22 @@ using Elasticsearch.Net;
 using Nest;
 using Nest.JsonNetSerializer;
 using Microsoft.AspNetCore.Http;
+using Movies.Queries.Model;
+using Movies.Domain.Components;
+using Api.Infrastructure;
+using Microsoft.Extensions.Configuration;
 
 namespace Movies.Api
 {
     public class Startup : StartupBase
     {
         public IHostingEnvironment Environment { get; }
+        public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
             Environment = env;
+            Configuration = configuration;
         }
 
         public override IServiceProvider CreateServiceProvider(IServiceCollection services)
@@ -33,6 +39,7 @@ namespace Movies.Api
             {
                 var assemblies = new AssemblyRegistry()
                 .AddAssemblyFor<Movie>()
+                .AddAssemblyFor<MovieListRequestModel>()
                 .GetRegisteredAssemblies(Environment.ContentRootPath);
 
                 //services
@@ -62,6 +69,8 @@ namespace Movies.Api
         {
             base.ConfigureServices(services);
 
+            services.EagerConfigure<MovieAssetLoaderOptions>(Configuration.GetSection("MovieAssetLoader"));
+
             services.AddRouting();
 
             services
@@ -69,10 +78,7 @@ namespace Movies.Api
                 .AddApiExplorer()
                 .AddDataAnnotations()
                 .AddFormatterMappings()
-                .AddJsonFormatters(settings =>
-                {
-                    settings.ContractResolver = new DefaultContractResolver();
-                });
+                .AddJsonFormatters();
 
             services.AddSwaggerGen(c =>
             {
