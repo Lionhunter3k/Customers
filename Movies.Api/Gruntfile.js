@@ -44,7 +44,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     baseUrl: 'static/v1/Scripts/',
-                    include: ['index', 'app', 'promise_done_polyfill'],
+                    include: ['index', 'app', 'promise_done_polyfill', 'bootstrap'],
                     out: 'static/v1/Scripts/app-loader.min.js',
                     mainConfigFile: ['static/v1/Scripts/require-config.js', 'static/v1/Scripts/require-config.release.js'],
                     optimize: 'uglify',
