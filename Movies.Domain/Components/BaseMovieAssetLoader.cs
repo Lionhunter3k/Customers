@@ -44,7 +44,7 @@ namespace Movies.Domain.Components
                                     {
                                         var uri = new Uri(url);
                                         var extension = uri.IsFile ? Path.GetExtension(Path.GetFileName(uri.LocalPath)) : result.Content.Headers.ContentType.MediaType.GetExtension(false);
-                                        value.Value = await InternalLoadAssetsAsync(stream, extension);
+                                        value.Value = await InternalLoadAssetsAsync(stream, uri, extension);
                                     }
                                 }
                             }

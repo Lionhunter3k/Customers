@@ -20,11 +20,10 @@ define(['exports', 'can.full', 'jquery', 'bootpag'], function (exports, _can, _j
     if (!window._proxy) {
         window._proxy = {
             getInterceptor: function getInterceptor(object, propertyName) {
-                if (object.attr && (object._data && object._data[propertyName] || object._computedAttrs && object._computedAttrs[propertyName] && object._computedAttrs[propertyName].compute)) {
+                if (object.attr && (object._data && object._data[propertyName] !== undefined || object._computedAttrs && object._computedAttrs[propertyName])) {
                     return object.attr(propertyName);
                 }return object[propertyName];
-            },
-            setInterceptor: function setInterceptor(object, propertyName, value) {
+            }, setInterceptor: function setInterceptor(object, propertyName, value) {
                 if (object.attr) {
                     return object.attr(propertyName, value);
                 } else {
@@ -32,7 +31,8 @@ define(['exports', 'can.full', 'jquery', 'bootpag'], function (exports, _can, _j
                 }
             }, updatePostfixAddInterceptor: function updatePostfixAddInterceptor(object, propertyName) {
                 var original = this.getInterceptor(object, propertyName);this.setInterceptor(object, propertyName, original + 1);return original;
-            }, updatePostfixSubtractInterceptor: function updatePostfixSubtractInterceptor(object, propertyName, value) {
+            },
+            updatePostfixSubtractInterceptor: function updatePostfixSubtractInterceptor(object, propertyName, value) {
                 var original = this.getInterceptor(object, propertyName);this.setInterceptor(object, propertyName, value - 1);return original;
             } };
     }exports.default = _proxy.getInterceptor(_can2.default, 'Component').extend({
@@ -57,8 +57,7 @@ define(['exports', 'can.full', 'jquery', 'bootpag'], function (exports, _can, _j
                         } else {
                             return value;
                         }
-                    }
-                },
+                    } },
                 maxpages: {
                     type: 'number',
                     set: function set(value) {

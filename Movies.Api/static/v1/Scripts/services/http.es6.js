@@ -10,7 +10,7 @@ export default function (ajaxOptions) {
 	$ajaxPromise
 		.done(can.proxy(resultPromise.resolve, resultPromise))
 		.fail(function (error) {
-			try { 
+			try {
 				let errorResponse = JSON.parse(error.responseText);
 				let errorModel = { errorStatus: error.status, error: errorResponse };
 				resultPromise.reject(errorModel);
@@ -24,7 +24,6 @@ export default function (ajaxOptions) {
 					let errorModel = { errorStatus: error.status };
 					resultPromise.reject(errorModel);
 				}
-				
 			}
 		});
 	return resultPromise.promise().fail(function (error) {
