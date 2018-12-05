@@ -58,7 +58,7 @@ namespace Movies.Queries.Handler
                     {
                         query &= q.Terms(c => c
                             .Field(p => p.Genres)
-                            .Terms(message.Request.Genres.ToArray()));
+                            .Terms(message.Request.Genres.Select(t => t.ToLowerInvariant()).ToArray()));
                     }
                     if (message.Request.Classes?.Count > 0)
                     {
