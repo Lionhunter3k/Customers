@@ -37,7 +37,7 @@
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-  <Target Name="_IncludeModules" BeforeTargets="BeforeBuild">
+  <!--<Target Name="_IncludeModules" BeforeTargets="BeforeBuild">
     <Exec Command="npm install" />
     <Exec Command="npm run grunt-prod" />
     <ItemGroup>
@@ -50,5 +50,5 @@
       <_Configs Include="*.json" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(_ContentIncludedByDefault)" />
       <ContentWithTargetPath Include="@(_Configs)" TargetPath="%(Identity)" CopyToPublishDirectory="Always" CopyToOutputDirectory="Always" />
     </ItemGroup>
-  </Target>
+  </Target>-->
 </Project>
