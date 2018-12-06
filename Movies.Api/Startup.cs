@@ -21,6 +21,7 @@ using Api.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 
 namespace Movies.Api
 {
@@ -103,6 +104,24 @@ namespace Movies.Api
                         await response.WriteAsync($"{connString.Key}: {connString.Value} \n");
                     }
                 });
+
+                r.MapGet("cloudify", async (request, response, routeData) =>
+                {
+                    var options = request.HttpContext.RequestServices.GetService<Account>();
+                    await response.WriteAsync($"{JsonConvert.SerializeObject(options)}");
+                });
+
+                r.MapGet("elastic", async (request, response, routeData) =>
+                {
+                    var configuration = request.HttpContext.RequestServices.GetService<IConfiguration>();
+
+                    var connstringSection = configuration.GetSection("Elastic");
+                    foreach (var connString in connstringSection.AsEnumerable())
+                    {
+                        await response.WriteAsync($"{connString.Key}: {connString.Value} \n");
+                    }
+                });
+
             });
         }
 
