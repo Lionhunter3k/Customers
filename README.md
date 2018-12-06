@@ -5,8 +5,11 @@ When you use a hammer a lot of times, you tend to use it very well. If you use a
 ## Prerequisites for Debian 9:
   
 Nodejs/NPM (https://tecadmin.net/install-latest-nodejs-npm-on-debian/)
+
 Net Core (https://dotnet.microsoft.com/download/linux-package-manager/debian9/runtime-2.1.6)
+
 ElasticSearch 6.x (https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html, and use the oss dist)
+
 If ElasticSearch isn't installed on the machine that runs the web server, you should uncomment in the /etc/elasticsearch/elasticsearch.yml file with your favorite editor the following line: network.host: 0.0.0.0 (or put the exact addresseses you want to allow remote connections from)
 
 ## Usage for Customers
