@@ -20,6 +20,7 @@ using Movies.Domain.Components;
 using Api.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using CloudinaryDotNet;
+using Microsoft.AspNetCore.Routing;
 
 namespace Movies.Api
 {
@@ -89,9 +90,27 @@ namespace Movies.Api
             });
         }
 
+        private static void InlineRoute(IApplicationBuilder app)
+        {
+            app.UseRouter(r =>
+            {
+                r.MapGet("config", async (request, response, routeData) =>
+                {
+                    var configuration = request.HttpContext.RequestServices.GetService<IConfiguration>();
+
+                    foreach (var connString in configuration.AsEnumerable())
+                    {
+                        await response.WriteAsync($"{connString.Key}: {connString.Value} \n");
+                    }
+                });
+            });
+        }
+
         public override void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
+
+            InlineRoute(app);
 
             app.MapWhen(context => context.Request.Path.HasValue && context.Request.Path.Value.StartsWith("/v1/movies", StringComparison.InvariantCultureIgnoreCase) && string.Equals(context.Request.Method, "get", StringComparison.InvariantCultureIgnoreCase), spa =>
             {
