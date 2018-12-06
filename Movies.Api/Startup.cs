@@ -91,8 +91,9 @@ namespace Movies.Api
             });
         }
 
-        private static void InlineRoute(IApplicationBuilder app)
+        private static void Debug(IApplicationBuilder app)
         {
+#if DEBUG
             app.UseRouter(r =>
             {
                 r.MapGet("config", async (request, response, routeData) =>
@@ -105,7 +106,7 @@ namespace Movies.Api
                     }
                 });
 
-                r.MapGet("cloudify", async (request, response, routeData) =>
+                r.MapGet("cloudinary", async (request, response, routeData) =>
                 {
                     var options = request.HttpContext.RequestServices.GetService<Account>();
                     await response.WriteAsync($"{JsonConvert.SerializeObject(options)}");
@@ -123,13 +124,14 @@ namespace Movies.Api
                 });
 
             });
+#endif
         }
 
         public override void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
 
-            InlineRoute(app);
+            Debug(app);
 
             app.MapWhen(context => context.Request.Path.HasValue && context.Request.Path.Value.StartsWith("/v1/movies", StringComparison.InvariantCultureIgnoreCase) && string.Equals(context.Request.Method, "get", StringComparison.InvariantCultureIgnoreCase), spa =>
             {
