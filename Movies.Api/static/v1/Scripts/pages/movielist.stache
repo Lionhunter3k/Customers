@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="col-md-9">
-        <div class="row">
+        <div class="row cleargrid">
             <ajax-pager read="/api/movies" {additional-data}="location" read-type="get" current-page-name="page" limit-name="pageSize" limit="9" *pager />
             {{#if *pager.loading}}
             <loading></loading>

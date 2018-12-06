@@ -43,6 +43,8 @@
         display: -webkit-box;
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
+        height: 200px;
+        overflow: auto;
     }
 
     .huge {
@@ -113,6 +115,10 @@
 
     .caption > .movie-caption-title {
         height: 50px;
+        text-overflow: ellipsis;
+        /* Needed to make it work */
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     a.genre-link {
