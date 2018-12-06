@@ -1,4 +1,3 @@
-FROM node:10.13.0-alpine as node
 FROM microsoft/dotnet:2.1-sdk-alpine AS builder
 WORKDIR /source
 COPY . .
