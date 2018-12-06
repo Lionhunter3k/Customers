@@ -25,7 +25,7 @@ or try here: https://dellcustomers-web.herokuapp.com/swagger/index.html
 
 ```bash
 dotnet restore
-dotnet cd Movies.Api
+cd Movies.Api
 npm install
 npm run grunt-prod
 dotnet run
