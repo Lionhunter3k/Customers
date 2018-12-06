@@ -13,7 +13,8 @@ If ElasticSearch isn't installed on the machine that runs the web server, you sh
 
 ```bash
 dotnet restore
-dotnet run --project Customers.Api.csproj
+cd Customers.Api
+dotnet run
 ```
 ## How to interact with the Customers API
 
