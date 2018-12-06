@@ -17,7 +17,7 @@ namespace Movies.Api
               .UseStartup<Startup>()
               .ConfigureAppConfiguration((hostingContext, config) =>
               {
-                  config.AddEnvironmentVariables().AddJsonFile("appsettings.json"); ;
+                  config.AddJsonFile("appsettings.json").AddEnvironmentVariables();
                   if (args == null)
                       return;
                   config.AddCommandLine(args);
