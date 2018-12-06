@@ -25,7 +25,7 @@ namespace Movies.Tests.Queries
     public class MovieListHandlerTests : ElasticSearchFixture
     {
         private Faker<Movie> _testMovies = new AutoFaker<Movie>().RuleFor(q => q.Id, (f, m) => m.Id = Guid.NewGuid().ToString());
-        private MovieListHandler _handler;
+        private MovieQueryHandler _handler;
 
         protected override ConnectionSettings CreateConnectionSettings(Uri uri)
         {
@@ -59,7 +59,7 @@ namespace Movies.Tests.Queries
         public async Task ClearElasticSearchIndexes()
         {
             await ElasticSearchIndexer.DeleteAllIndexesAsync();
-            this._handler = new MovieListHandler(base.ElasticSearchConfiguration.GetClient());
+            this._handler = new MovieQueryHandler(base.ElasticSearchConfiguration.GetClient());
         }
 
         [Test]

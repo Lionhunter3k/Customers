@@ -19,13 +19,18 @@ namespace Movies.Api.Controllers
     {
         private readonly IMovieParser _movieParser;
         private readonly IMovieIndexer _movieIndexer;
-        private readonly IRequestHandler<PagedRequest<MovieListRequestModel, MovieListModel>, PagedList<MovieListModel>> _requestHandler;
+        private readonly IRequestHandler<PagedRequest<MovieListRequestModel, MovieListModel>, PagedList<MovieListModel>> _movieRequestHandler;
+        private readonly IRequestHandler<PagedRequest<MovieListRequestModel, GenreAggregateListModel>, PagedList<GenreAggregateListModel>> _genreRequestHandler;
 
-        public MovieController(IMovieParser movieParser, IMovieIndexer movieIndexer, IRequestHandler<PagedRequest<MovieListRequestModel, MovieListModel>, PagedList<MovieListModel>> requestHandler)
+        public MovieController(IMovieParser movieParser, 
+            IMovieIndexer movieIndexer,
+            IRequestHandler<PagedRequest<MovieListRequestModel, MovieListModel>, PagedList<MovieListModel>> requestHandler,
+            IRequestHandler<PagedRequest<MovieListRequestModel, GenreAggregateListModel>, PagedList<GenreAggregateListModel>> genreRequestHandler)
         {
             this._movieParser = movieParser;
             this._movieIndexer = movieIndexer;
-            this._requestHandler = requestHandler;
+            this._movieRequestHandler = requestHandler;
+            this._genreRequestHandler = genreRequestHandler;
         }
 
         [Route("api/[controller]s")]
@@ -44,7 +49,15 @@ namespace Movies.Api.Controllers
         [HttpGet]
         public async Task<PagedList<MovieListModel>> List(MovieListRequestModel model, int page = 1, int pageSize = 25)
         {
-            var results = await _requestHandler.HandleAsync(new PagedRequest<MovieListRequestModel, MovieListModel>(model) { Page = page - 1, PageSize = pageSize < 1000 ? pageSize : 1000 });
+            var results = await _movieRequestHandler.HandleAsync(new PagedRequest<MovieListRequestModel, MovieListModel>(model) { Page = page - 1, PageSize = pageSize < 1000 ? pageSize : 1000 });
+            return results;
+        }
+
+        [Route("api/[controller]/genres")]
+        [HttpGet]
+        public async Task<PagedList<GenreAggregateListModel>> AggregateGenres(MovieListRequestModel model, int pageSize = 25)
+        {
+            var results = await _genreRequestHandler.HandleAsync(new PagedRequest<MovieListRequestModel, GenreAggregateListModel>(model) { Page = 0, PageSize = pageSize < 1000 ? pageSize : 1000 });
             return results;
         }
     }

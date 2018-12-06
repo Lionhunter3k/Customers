@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Movies.Queries.Model
 {
-    public class MovieListRequestModel : IRequest<MovieListModel>
+    public class MovieListRequestModel : IRequest<MovieListModel>, IRequest<GenreAggregateListModel>
     {
         public List<string> Classes { get; set; } = new List<string>();
 

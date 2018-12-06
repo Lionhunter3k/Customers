@@ -55,6 +55,12 @@ namespace Movies.Domain.Infrastructure
                         .Keyword(p => p.Name("raw"))
                     )
                 )
+               .Text(t => t
+                    .Name(p => p.Genres)
+                    .Fields(f => f
+                        .Keyword(p => p.Name("raw"))
+                    )
+                )
                 .Nested<Person>(n => n
                     .Name(p => p.Cast.First())
                     .AutoMap()

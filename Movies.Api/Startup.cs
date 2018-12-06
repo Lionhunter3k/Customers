@@ -91,47 +91,10 @@ namespace Movies.Api
             });
         }
 
-        private static void Debug(IApplicationBuilder app)
-        {
-#if DEBUG
-            app.UseRouter(r =>
-            {
-                r.MapGet("config", async (request, response, routeData) =>
-                {
-                    var configuration = request.HttpContext.RequestServices.GetService<IConfiguration>();
-
-                    foreach (var connString in configuration.AsEnumerable())
-                    {
-                        await response.WriteAsync($"{connString.Key}: {connString.Value} \n");
-                    }
-                });
-
-                r.MapGet("cloudinary", async (request, response, routeData) =>
-                {
-                    var options = request.HttpContext.RequestServices.GetService<Account>();
-                    await response.WriteAsync($"{JsonConvert.SerializeObject(options)}");
-                });
-
-                r.MapGet("elastic", async (request, response, routeData) =>
-                {
-                    var configuration = request.HttpContext.RequestServices.GetService<IConfiguration>();
-
-                    var connstringSection = configuration.GetSection("Elastic");
-                    foreach (var connString in connstringSection.AsEnumerable())
-                    {
-                        await response.WriteAsync($"{connString.Key}: {connString.Value} \n");
-                    }
-                });
-
-            });
-#endif
-        }
 
         public override void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
-
-            Debug(app);
 
             app.MapWhen(context => context.Request.Path.HasValue && context.Request.Path.Value.StartsWith("/v1/movies", StringComparison.InvariantCultureIgnoreCase) && string.Equals(context.Request.Method, "get", StringComparison.InvariantCultureIgnoreCase), spa =>
             {
