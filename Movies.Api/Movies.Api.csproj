@@ -32,15 +32,23 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="static\v1\Scripts\components\request.es6.js" />
-    <None Remove="static\v1\Scripts\pages\moviedetail.es6.js" />
-    <None Remove="static\v1\Scripts\pages\moviedetail.stache" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="appsettings.json">
+    <None Include="*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-
+  <Target Name="_IncludeModules" BeforeTargets="BeforeBuild">
+    <Exec Command="npm install" />
+    <Exec Command="npm run grunt-prod" />
+    <ItemGroup>
+      <_GeneratedModules Include="static\**\*.*" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(_ContentIncludedByDefault)" />
+      <ContentWithTargetPath Include="@(_GeneratedModules)" TargetPath="%(Identity)" CopyToPublishDirectory="Always" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+  </Target>
+  <Target Name="_IncludeConfigs" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <_Configs Include="*.json" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(_ContentIncludedByDefault)" />
+      <ContentWithTargetPath Include="@(_Configs)" TargetPath="%(Identity)" CopyToPublishDirectory="Always" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+  </Target>
 </Project>
