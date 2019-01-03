@@ -25,7 +25,7 @@ namespace Movies.Tests.Queries
     public class MovieListHandlerTests : ElasticSearchFixture
     {
         private Faker<Movie> _testMovies = new AutoFaker<Movie>().RuleFor(q => q.Id, (f, m) => m.Id = Guid.NewGuid().ToString());
-        private MovieQueryHandler _handler;
+        private IRequestHandler<PagedRequest<MovieListRequestModel, MovieListModel>, PagedList<MovieListModel>> _handler;
 
         protected override ConnectionSettings CreateConnectionSettings(Uri uri)
         {
@@ -89,7 +89,7 @@ namespace Movies.Tests.Queries
         public async Task SortByHeadlineAsc_NoFilters_100_Movies()
         {
             var numberOfMovies = 100;
-            var fakeMovies = await GenerateAndInsertMovies(numberOfMovies, (m, i) => 
+            var fakeMovies = await GenerateAndInsertMovies(numberOfMovies, (m, i) =>
             {
                 if(i < 10)
                 {
@@ -378,7 +378,7 @@ namespace Movies.Tests.Queries
             var request = new PagedRequest<MovieListRequestModel, MovieListModel>(new MovieListRequestModel { Query = "Bruce" });
             var result = await _handler.HandleAsync(request);
             var orderedMovies = fakeMovies.Where(q => q.Cast.Select(r => r.Name).Contains("Bruce Willis")).ToList();
-            Assert.AreEqual(orderedMovies.Count, result.Items.Count);    
+            Assert.AreEqual(orderedMovies.Count, result.Items.Count);
             foreach (var fakeMovie in orderedMovies)
             {
                 Assert.IsTrue(result.Items.Select(q => q.Property("Id").Value.ToString()).Contains(fakeMovie.Id));
@@ -478,7 +478,7 @@ namespace Movies.Tests.Queries
             var request = new PagedRequest<MovieListRequestModel, MovieListModel>(new MovieListRequestModel { Query = "Willis" });
             var result = await _handler.HandleAsync(request);
             var orderedMovies = fakeMovies.Where(q => q.Directors.Select(r => r.Name).Contains("Bruce Willis")).ToList();
-            Assert.AreEqual(orderedMovies.Count, result.Items.Count);   
+            Assert.AreEqual(orderedMovies.Count, result.Items.Count);
             foreach (var fakeMovie in orderedMovies)
             {
                 Assert.IsTrue(result.Items.Select(q => q.Property("Id").Value.ToString()).Contains(fakeMovie.Id));
