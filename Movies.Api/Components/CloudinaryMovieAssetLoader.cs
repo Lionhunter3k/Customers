@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Api.Components
 {
+#if !DEBUG
     public class CloudinaryMovieAssetLoader : BaseMovieAssetLoader
     {
         private readonly Account _account;
@@ -27,4 +28,5 @@ namespace Movies.Api.Components
             return uploadResult.Uri.ToString();
         }
     }
+#endif
 }
