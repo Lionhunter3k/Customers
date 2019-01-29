@@ -25,7 +25,7 @@ namespace Movies.Api.Components
                 File = new FileDescription(Guid.NewGuid() + extension, inputStream)
             };
             var uploadResult = await cloudinary.UploadAsync(uploadParams);
-            return uploadResult.Uri.ToString();
+            return uploadResult.SecureUri.ToString();
         }
     }
 #endif
