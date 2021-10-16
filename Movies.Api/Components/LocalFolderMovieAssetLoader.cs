@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Movies.Api.Components
 {
-#if DEBUG
     public class LocalFolderMovieAssetLoader : BaseMovieAssetLoader
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -28,5 +27,4 @@ namespace Movies.Api.Components
             }
         }
     }
-#endif
 }

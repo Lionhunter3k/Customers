@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,9 @@ namespace Infrastructure.Container
     //with a scoped lifetime
     public class ServiceModule : Autofac.Module
     {
-        public IReadOnlyCollection<Assembly> Assemblies { get; set; }
+        public IReadOnlyCollection<Assembly> Assemblies { get; set; } = new Assembly[0];
+
+        public IReadOnlyCollection<Type> IgnoredTypes { get; set; } = new Type[0];
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -20,7 +23,7 @@ namespace Infrastructure.Container
                 typeof(ServiceModule).Assembly
             };
             builder.RegisterAssemblyTypes(assembliesToLoad.ToArray())
-                  .Where(c => (c.Namespace?.EndsWith("Components")).GetValueOrDefault() && c.GetInterfaces().Any(t => (t.Namespace?.EndsWith("Services")).GetValueOrDefault()))
+                  .Where(c => !IgnoredTypes.Contains(c) && (c.Namespace?.EndsWith("Components")).GetValueOrDefault() && c.GetInterfaces().Any(t => (t.Namespace?.EndsWith("Services")).GetValueOrDefault()))
                   .As(c => c.GetInterfaces().Where(t => (t.Namespace?.EndsWith("Services")).GetValueOrDefault()))
                   .PropertiesAutowired()
                   .InstancePerLifetimeScope();

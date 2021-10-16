@@ -14,7 +14,7 @@ namespace Infrastructure.AutoMapper.Container
     //during serializations or large responses with unused fields
     public class AutoMapperModule : Autofac.Module
     {
-        public IReadOnlyCollection<Assembly> Assemblies { get; set; }
+        public IReadOnlyCollection<Assembly> Assemblies { get; set; } = new Assembly[0];
 
         public bool AssertConfigurationIsValid { get; set; }
 

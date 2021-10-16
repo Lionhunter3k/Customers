@@ -21,6 +21,7 @@ namespace Movies.Api
                   if (args == null)
                       return;
                   config.AddCommandLine(args);
+                  config.AddEnvironmentVariables();
               })
               //.UseUrls("http://localhost:5050")
               .Build();

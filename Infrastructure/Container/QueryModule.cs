@@ -11,7 +11,7 @@ namespace Infrastructure.Container
 {
     public class QueryModule : Autofac.Module
     {
-        public IReadOnlyCollection<Assembly> Assemblies { get; set; }
+        public IReadOnlyCollection<Assembly> Assemblies { get; set; } = new Assembly[0];
 
         protected override void Load(ContainerBuilder builder)
         {

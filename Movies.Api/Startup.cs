@@ -22,6 +22,7 @@ using Microsoft.Extensions.Configuration;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
+using Movies.Api.Components;
 
 namespace Movies.Api
 {
@@ -46,7 +47,11 @@ namespace Movies.Api
                 .GetRegisteredAssemblies(Environment.ContentRootPath);
 
                 //services
-                var servicesModule = new ServiceModule { Assemblies = assemblies };
+                var servicesModule = new ServiceModule
+                {
+                    Assemblies = assemblies,
+                    IgnoredTypes = new List<Type> { Environment.IsDevelopment() ? typeof(LocalFolderMovieAssetLoader) : typeof(CloudinaryMovieAssetLoader) }
+                };
                 builder.RegisterModule(servicesModule);
 
                 //query module
@@ -100,11 +105,14 @@ namespace Movies.Api
             {
                 spa.Use((context, next) =>
                 {
-#if DEBUG
-                    context.Request.Path = new PathString("/v1/index.debug.html");
-#else
-                    context.Request.Path = new PathString("/v1/index.html");
-#endif
+                    if(Environment.IsDevelopment())
+                    {
+                        context.Request.Path = new PathString("/v1/index.debug.html");
+                    }
+                    else
+                    {
+                        context.Request.Path = new PathString("/v1/index.html");
+                    }
                     return next();
                 });
 

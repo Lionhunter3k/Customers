@@ -13,7 +13,7 @@ namespace Infrastructure.ElasticSearch.Container
 {
     public class ElasticSearchModule : Autofac.Module
     {
-        public IReadOnlyCollection<Assembly> Assemblies { get; set; }
+        public IReadOnlyCollection<Assembly> Assemblies { get; set; } = new Assembly[0];
 
         public Func<Uri, ConnectionSettings> ConnectionSettingsFactory { get; set; } = CreateConnectionSettings;
 
