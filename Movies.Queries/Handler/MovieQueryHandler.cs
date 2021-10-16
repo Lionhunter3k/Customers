@@ -105,8 +105,8 @@ namespace Movies.Queries.Handler
             if (genres?.Count > 0)
             {
                 queryContainer &= q.Terms(c => c
-                    .Field(p => p.Genres)
-                    .Terms(genres.Select(t => t.ToLowerInvariant()).ToArray()));
+                  .Field(p => p.Genres)
+                  .Terms(genres.Select(t => t.ToLowerInvariant()).ToArray()));
             }
             if (classes?.Count > 0)
             {
@@ -186,19 +186,9 @@ namespace Movies.Queries.Handler
                     QueryContainer query = BaseQuery(message.Request.Id, message.Request.MinYear, message.Request.MaxYear, message.Request.MinDuration, message.Request.MaxDuration, null, message.Request.Classes, message.Request.Certs, message.Request.Query, q);
                     return query;
                 }).Aggregations(a => a
-                     .Nested("nested_genres", n => n
-                         .Path(r => r.Genres)
-                         .Aggregations(aa => aa
-                             .Terms("genre_names", avg => avg
-                                //.From(message.Page * message.PageSize)
-                                .Size(10)
-                                 .Field(c => c.Genres.Suffix("raw"))
-                             )
-                         )
-                     ))
+                     .Terms("genre_names", st => st.Field(f => f.Genres.First().Suffix("raw"))))
                 .TrackScores(true));
-                var nestedCategoryAgg = aggResult.Aggs.Nested("nested_genres");
-                var genreNameAgg = nestedCategoryAgg?.Terms("genre_names");
+                var genreNameAgg = aggResult.Aggs.Terms("genre_names");
                 var genres = new List<GenreAggregateListModel>();
                 foreach (var genre in genreNameAgg?.Buckets ?? Enumerable.Empty<Nest.KeyedBucket<string>>())
                 {

@@ -16,19 +16,21 @@
                     <input type="text" class="form-control" can-model-value="location.query" placeholder="Actors, directors, synopsis, etc">
                 </div>
                 <ajax-pager read="/api/movie/genres" {(selected-rows)}="location.genres" {additional-data}="location" read-type="get" limit-name="pageSize" limit="100" *genrepager />
-                {{^if *genrepager.loading}}
-                {{#if *genrepager.count}}
-                <div class="form-group checkbox-list">
+                {{#if *genrepager.loading}}
+                <loading></loading>
+              {{else}}
+              {{#if *genrepager.paginatedItems}}
+              <div class="form-group checkbox-list">
                     <label>Genres</label>
                     {{#each *genrepager.paginatedItems}}
                     <div class="form-check">
                         <label>
-                            <input type="checkbox" {{#if *genrepager.isToggled(genre)}} checked{{/if}} ($change)="*genrepager.toggle(genre,$element.is(':checked'))"> <span class="label-text">{{genre}} ({{count}})</span>
+                            <input type="checkbox" {{#if *genrepager.isToggled(genre)}}checked{{/if}} ($click)="*genrepager.toggle(genre)"> <span class="label-text">{{genre}} ({{count}})</span>
                         </label>
                     </div>
                     {{/each}}
                 </div>
-                {{/if}}
+              {{/if}}
                 {{/if}}
             </form>
         </div>
