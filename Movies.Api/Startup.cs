@@ -50,7 +50,7 @@ namespace Movies.Api
                 var servicesModule = new ServiceModule
                 {
                     Assemblies = assemblies,
-                    IgnoredTypes = new List<Type> { Environment.IsDevelopment() ? typeof(LocalFolderMovieAssetLoader) : typeof(CloudinaryMovieAssetLoader) }
+                    IgnoredTypes = new List<Type> { Environment.IsDevelopment() ? typeof(CloudinaryMovieAssetLoader) : typeof(LocalFolderMovieAssetLoader) }
                 };
                 builder.RegisterModule(servicesModule);
 
@@ -107,7 +107,7 @@ namespace Movies.Api
                 {
                     if(Environment.IsDevelopment())
                     {
-                        context.Request.Path = new PathString("/v1/index.debug.html");
+                        context.Request.Path = new PathString("/v1/index.debug.webpack.html");
                     }
                     else
                     {

@@ -1,0 +1,214 @@
+﻿<can-import from="../components/loading" />
+<can-import from="../components/request" />
+<can-import from="../components/model.set" />
+<request {url}="movieUrl">
+    {{#if requestPromise.isPending}}
+    <loading><span>Loading</span></loading>
+    {{else}}
+    {{#if requestPromise.value.items.length}}
+    <model-set data-source="requestPromise.value.items.0" data-destination="movie" />
+    {{#movie}}
+    <div class="row movie-cards">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{rating}}/5</div>
+                            <div class="user-content">{{quote}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{class}}</div>
+                            <div>{{duration}} seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{year}}</div>
+                            <div>Last updated: {{lastUpdated}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="huge">Genres</div>
+                            <div>
+                                {{#each genres}}
+                                <a href="{{routeUrl page='movielist' genres=.}}" class="genre-link btn btn-info">{{.}}</a>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Description
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <p>{{body}}</p>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            {{#if cardImages.length}}
+            <div class="content-panel">
+                <div class="row">
+                    {{#each cardImages}}
+                    <div class="col-md-3 col-xs-6">
+                        <a href="{{url}}" class="thumbnail"> <img alt="" style="height: 180px; width: 100%; display: block;" src="{{url}}"> </a>
+                    </div>
+                    {{/each}}
+                </div>
+                <span class="small-header">Photos</span>
+            </div>
+            {{/if}}
+            {{#if keyArtImages.length}}
+            <div class="content-panel">
+                <div class="row">
+                    {{#each keyArtImages}}
+                    <div class="col-md-3 col-xs-6">
+                        <a href="{{url}}" class="thumbnail"> <img alt="" style="height: 180px; width: 100%; display: block;" src="{{url}}"> </a>
+                    </div>
+                    {{/each}}
+                </div>
+                <span class="small-header">Art</span>
+            </div>
+            {{/if}}
+            {{#if videos.length}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> Videos
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Url</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each videos}}
+                            <tr>
+                                <td>{{@index[1]}}</td>
+                                <td>{{title}}</td>
+                                <td><span class="label label-primary">{{type}}</span></td>
+                                <td>
+                                    {{#if alternatives.length}}
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Watch <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{url}}">Normal</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            {{#each alternatives}}
+                                            <li><a href="{{url}}">{{quality}}</a></li>
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+                                    {{else}}
+                                    <a class="btn btn-default" href="{{url}}">Watch</a>
+                                    {{/if}}
+                                </td>
+                            </tr>
+                            {{/each}}
+
+                        </tbody>
+                    </table>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            {{/if}}
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Cast
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="list-group">
+                        {{#each cast}}
+                        <a href="{{routeUrl page='movielist' query=name}}" class="list-group-item">
+                            <i class="fa fa-comment fa-fw"></i> {{name}}
+                            <span class="pull-right text-muted small">
+                                <em>Some guy #{{@index[1]}}</em>
+                            </span>
+                        </a>
+                        {{/each}}
+                    </div>
+                    <!-- /.list-group -->
+                    <!--TODO: add paginator-->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Production
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="list-group">
+                        {{#each directors}}
+                        <a href="{{routeUrl page='movielist' query=name}}" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> {{name}}
+                            <span class="pull-right text-muted small">
+                                <em>Director #{{@index[1]}}</em>
+                            </span>
+                        </a>
+                        {{/each}}
+                    </div>
+                    <!-- /.list-group -->
+                    <!--TODO: add paginator-->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+    {{/movie}}
+    {{else}}
+    <div class="alert alert-warning" role="alert"> <strong>Warning!</strong> Can't find movie with id #{{location.slug}}. </div>
+    {{/if}}
+    {{/if}}
+</request>

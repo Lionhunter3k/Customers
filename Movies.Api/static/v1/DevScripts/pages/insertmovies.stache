@@ -1,0 +1,33 @@
+﻿<can-import from="../components/loading" />
+<can-import from="../attributes/model.value" />
+<can-import from="../attributes/parsley.validate" />
+<p>You can load a json dataset to seed the ElasticSearch database. The json file can be any size.</p>
+<div class="content-panel">
+    <form parsley-validate ($parsley.valid)="sendFile($element)">
+        {{#if requestPromise.isResolved}}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" ($click)="attr('requestPromise', null)" data-dismiss="alert" aria-hidden="true">×</button>
+            The data set was uploaded!
+        </div>
+        {{/if}}
+        {{#if requestPromise.isRejected}}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" ($click)="attr('requestPromise', null)" aria-hidden="true">×</button>
+            {{#if requestPromise.reason.error.message}}
+            {{requestPromise.reason.error.message}}
+            {{else}}
+            Something bad happened
+            {{/if}}
+        </div>
+        {{/if}}
+        <div class="form-group">
+            <label for="dataSet">JSON File</label>
+            <input type="file" required id="dataSet" data-parsley-required-message="Choose a file, please. No file, no cookie." ($change)="attr('file', $element)">
+        </div>
+        {{#if requestPromise.isPending}}
+        <loading><span>Loading</span></loading>
+        {{else}}
+        <button type="submit" class="btn btn-default">Submit</button>
+        {{/if}}
+    </form>
+</div>

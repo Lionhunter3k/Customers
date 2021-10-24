@@ -1,0 +1,45 @@
+﻿<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Movies</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false">
+            <ul class="nav navbar-nav">
+                <li class="{{#eq location.page 'movielist'}}active{{/eq}}"><a  href="{{routeUrl page='movielist'}}">All movies</a></li>
+                <li class="{{#eq location.page 'insertmovies'}}active{{/eq}}"><a  href="{{routeUrl page='insertmovies'}}">Insert movies</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<div class="container">
+    <div class="page">
+        <h1>{{title}}</h1>
+        {{#switch location.page}}
+        {{#case ""}}
+        <can-import from="./pages/movielist" />
+        <movie-list {location}="location" {^title}="title"></movie-list>
+        {{/case}}
+        {{#case "movielist"}}
+        <can-import from="./pages/movielist" />
+        <movie-list {location}="location" {^title}="title"></movie-list>
+        {{/case}}
+        {{#case "insertmovies"}}
+        <can-import from="./pages/insertmovies" />
+        <insert-movies {location}="location" {^title}="title"></insert-movies>
+        {{/case}}
+        {{#case "moviedetail"}}
+        <can-import from="./pages/moviedetail" />
+        <movie-detail {location}="location" {^title}="title"></movie-detail>
+        {{/case}}
+        {{#default}}
+        <div class="alert alert-danger" role="alert"> <strong>404</strong> No such page. </div>
+        {{/default}}
+        {{/switch}}
+    </div>
+</div>
